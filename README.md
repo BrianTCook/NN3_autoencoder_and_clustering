@@ -1,2 +1,2 @@
 # NN3_autoencoder_and_clustering
-Final assignment for Spring 2019 Neural Networks course at Leiden University. We have developed a set of algorithms that apply machine learning techniques to publicly available S&amp;P 500 stock data.
+Final assignment for Spring 2019 Neural Networks course at Leiden University. We have developed a set of algorithms that apply machine learning techniques to publicly available S&amp;P 500 stock data. The clustering technique algorithms are largely built upon the ones made available from Oleg Gnedin's Computational Astrophysics course at the University of Michigan.
