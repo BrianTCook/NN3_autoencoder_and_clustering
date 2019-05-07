@@ -75,7 +75,7 @@ def inputvec(company, year):
         
         if len(opens) != 0: #checking if there's actually any data
             v, s = np.nanstd(opens), np.nanmean(spreads)
-            n, h = np.nanmean(volumes), np.mean(highs)
+            n, h = np.nanmean(volumes), np.nanmean(highs)
         else:
             v, s, n, h = 0., 0., 0., 0.
     
