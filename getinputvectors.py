@@ -8,6 +8,7 @@ Created on Tue May  7 11:54:51 2019
 
 import numpy as np
 import pandas as pd
+import math
 
 '''
 data goes from February 8 2013 to Febraury 7 2018
@@ -76,8 +77,9 @@ def inputvec(company, year):
         if len(opens) != 0: #checking if there's actually any data
             v, s = np.nanstd(opens), np.nanmean(spreads)
             n, h = np.nanmean(volumes), np.nanmean(highs)
+    
         else:
-            v, s, n, h = 0., 0., 0., 0.
+            v, s, n, h = 'nan', 'nan', 'nan', 'nan'
     
         return [v, s, n, h]
 
@@ -86,9 +88,10 @@ def inputvec(company, year):
 companies = data.Name.unique()
 years = ['2014', '2015', '2016', '2017']
 
+#list comprehension to get input vectors for each company in each year
 inputvecs = [inputvec(company, year) for company in companies for year in years]
 
 with open('inputvector_table.txt', 'w+') as f:
     for item in inputvecs:
-        tup = tuple(item)      
-        f.write('%s %s %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f\n'%(tup))
+        if 'nan' not in tuple(item): #doesn't write in vectors with insufficient data
+            f.write('%s %s %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f\n'%(tuple(item)))
