@@ -29,7 +29,7 @@ def inputvec(company, year):
         n_{y,i}: mean(traded shares)
         h_{y,i}: mean(high price)
     
-    output is concatenation of Q_{1}, Q_{2}, Q_{3}, and Q_{4}
+    output is concatenation of company, year, Q_{1}, Q_{2}, Q_{3}, and Q_{4}
     '''
 
     #filters out by the company and relevant year
@@ -66,19 +66,29 @@ def inputvec(company, year):
         lows = [month['low'].tolist() for month in months]
         lows = [j for i in lows for j in i]
         
-        volumes = [month['high'].tolist() for month in months]
+        volumes = [month['volume'].tolist() for month in months]
         volumes = [j for i in volumes for j in i]
         
         spreads = [highs[i] - lows[i] for i in range(len(highs))]
         
         #ignores NaNs
-        v, s = np.nanstd(opens), np.nanmean(spreads)
-        n, h = np.nanmean(volumes), np.mean(highs)
+        
+        if len(opens) != 0: #checking if there's actually any data
+            v, s = np.nanstd(opens), np.nanmean(spreads)
+            n, h = np.nanmean(volumes), np.mean(highs)
+        else:
+            v, s, n, h = 0., 0., 0., 0.
     
         return [v, s, n, h]
-    
-    return Q(1) + Q(2) + Q(3) + Q(4)
 
-print(inputvec('GOOG', 2014))
+    return [company, year] + Q(1) + Q(2) + Q(3) + Q(4)
 
-    
+companies = data.Name.unique()
+years = ['2014', '2015', '2016', '2017']
+
+inputvecs = [inputvec(company, year) for company in companies for year in years]
+
+with open('inputvector_table.txt', 'w+') as f:
+    for item in inputvecs:
+        tup = tuple(item)      
+        f.write('%s %s %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f\n'%(tup))
