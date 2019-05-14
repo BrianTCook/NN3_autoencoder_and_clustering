@@ -31,8 +31,6 @@ plt.scatter(firstvar, secondvar)
 #plt.xlabel('[Fe/H]')
 #plt.ylabel('log d (kpc)')
 #plt.ylabel('m')
-
-
 for mu, C, w in zip(gmm_best.means_, gmm_best.covariances_, gmm_best.weights_):
     draw_ellipse(mu, C, scales=[2], fc='none', ec='k')
 plt.show()
